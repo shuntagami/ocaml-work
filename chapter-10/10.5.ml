@@ -32,8 +32,10 @@ let gakusei6 = {namae="asai"; tensuu=60; seiseki="C"}
 let rec gakusei_max lst = match lst with
     [] -> {namae = ""; tensuu = min_int; seiseki = ""}
   | ({namae = n; tensuu = t; seiseki = s} as gakusei) :: rest ->
-    if t >= (gakusei_max rest).tensuu then gakusei
-    else gakusei_max rest
+    let rest_max = gakusei_max rest in
+    match rest_max with {namae = n_max; tensuu = t_max; seiseki = s_max} ->
+      if t >= t_max then gakusei
+      else rest_max
 
 (* テスト *)
 let test1 = gakusei_max lst1 = gakusei2
