@@ -14,14 +14,14 @@ let lst4 = [{namae = "yoshida"; tensuu = 80; seiseki = "A"};
             {namae = "asai"; tensuu = 70; seiseki = "B"};
             {namae = "kaneko"; tensuu = 85; seiseki = "A"}]
 
-(* 目的：受け取った学生リスト lst の得点の合計を返す *)
-(* add_tokuten : gakusei_t -> int -> int *)
-let add_tokuten gakusei rest_result = match gakusei with
-    {namae = n; tensuu = t; seiseki = s} -> t + rest_result
-
 (* 目的: gakusei_t型のリストを受け取ったら得点の合計を返す *)
 (* gakusei_sum : gakusei_t list -> int *)
-let gakusei_sum lst = List.fold_right add_tokuten lst 0
+let gakusei_sum lst =
+  let add_tokuten gakusei rest_result =
+    match gakusei with
+      {namae = n; tensuu = t; seiseki =s} ->
+      t + rest_result in
+  List.fold_right add_tokuten lst 0
 
 (* テスト *)
 let test1 = gakusei_sum lst1 = 0

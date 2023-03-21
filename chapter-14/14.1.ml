@@ -5,13 +5,11 @@ let rec filter p lst = match lst with
   | first :: rest -> if p first then first :: filter p rest
     else filter p rest
 
-(* 目的: 整数nが偶数かどうか判定する *)
-(* is_even : int -> bool *)
-let is_even n = n mod 2 = 0
-
 (* 目的: リストlstから偶数の要素のみを取り出す *)
 (* even : int list -> int list *)
-let even lst = filter is_even lst
+let even lst =
+  let is_even n = n mod 2 = 0 in
+  filter is_even lst
 
 (* テスト *)
 let test1 = even [] = []

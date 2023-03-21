@@ -58,6 +58,18 @@ let test8 = koushin1 eki2 eki4 = eki4
 (* 目的：未確定の駅のリスト v を必要に応じて更新したリストを返す *)
 (* koushin : eki_t -> eki_t list -> eki_t list *)
 let koushin p v =
+  (* 目的: 未確定の駅 q を必要に応じて更新した駅を返す *)
+  (* koushin1 : eki_t -> eki_t -> eki_t *)
+  let koushin1 p q = match (p, q) with
+      ({namae = pn; saitan_kyori = ps; temae_list = pt},
+       {namae = qn; saitan_kyori = qs; temae_list = qt}) ->
+      let kyori = get_ekikan_kyori pn qn global_ekikan_list in
+      if kyori = infinity
+      then q
+      else if ps +. kyori < qs
+      then {namae = qn; saitan_kyori = ps +. kyori; temae_list = qn :: pt}
+      else q
+  in
   let f q = koushin1 p q in
   List.map f v
 

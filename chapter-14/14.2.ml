@@ -21,15 +21,13 @@ let rec filter p lst = match lst with
   | first :: rest -> if p first then first :: filter p rest
     else filter p rest
 
-(* 目的: 学生の成績がAかどうかを判定する *)
-(* is_expected_score : gakusei_t -> bool *)
-let is_expected_score gakusei =
-  match gakusei with {namae = n; tensuu = t; seiseki = s} ->
-    s = "A"
-
 (* 目的：学生リストlst のうち成績がA の人の数を返す*)
 (* count_A : gakusei_t list -> int *)
-let count_A list = List.length(filter is_expected_score list)
+let count_A list =
+  let is_A gakusei =
+    match gakusei with {namae = n; tensuu = t; seiseki = s} ->
+      s = "A" in
+  List.length(filter is_A list)
 
 (* テスト *)
 let test1 = count_A lst1 = 0
