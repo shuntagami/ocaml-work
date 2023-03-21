@@ -23,20 +23,20 @@ let ekimei_list = [
   {kanji="御茶ノ水"; kana="おちゃのみず"; romaji="ochanomizu"; shozoku="丸ノ内線"}
 ]
 
-(* 目的: ekimei_t 型のリストを受け取ったらその駅名を使ってeki_t 型のリストを作る *)
-(* make_eki_list : ekimei_t list -> eki_t list *)
-let make_eki_list ekimei_list =
+(* 目的: ekimei_t型のリストと起点を受け取ったら新しいeki_t型のリストを返す *)
+(* make_initial_eki_list : ekimei_t list -> string -> eki_t list *)
+let make_initial_eki_list ekimei_list kiten =
   List.map (fun ekimei -> match ekimei with
-        {kanji = k; kana = a; romaji = r; shozoku = s} ->
-        {namae = k; saitan_kyori = infinity; temae_list = []})
-    ekimei_list
+	     {kanji = k; kana = a; romaji = r; shozoku = s} ->
+	       if k = kiten
+	       then {namae = k; saitan_kyori = 0.; temae_list = [k]}
+	       else {namae = k; saitan_kyori = infinity; temae_list = []})
+	   ekimei_list
 
-(* テスト *)
-let test1 = make_eki_list [] = []
-let test2 = make_eki_list ekimei_list = [
+let test = make_initial_eki_list ekimei_list "茗荷谷" = [
     {namae="池袋"; saitan_kyori = infinity; temae_list = []};
     {namae="新大塚"; saitan_kyori = infinity; temae_list = []};
-    {namae="茗荷谷"; saitan_kyori = infinity; temae_list = []};
+    {namae="茗荷谷"; saitan_kyori = 0.; temae_list = ["茗荷谷"]};
     {namae="後楽園"; saitan_kyori = infinity; temae_list = []};
     {namae="本郷三丁目"; saitan_kyori = infinity; temae_list = []};
     {namae="御茶ノ水"; saitan_kyori = infinity; temae_list = []}
