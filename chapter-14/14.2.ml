@@ -21,13 +21,12 @@ let rec filter p lst = match lst with
   | first :: rest -> if p first then first :: filter p rest
     else filter p rest
 
-(* 目的：学生リストlst のうち成績がA の人の数を返す*)
+(* 目的：学生リスト lst のうち成績が A の人の数を返す *)
 (* count_A : gakusei_t list -> int *)
-let count_A list =
-  let is_A gakusei =
-    match gakusei with {namae = n; tensuu = t; seiseki = s} ->
-      s = "A" in
-  List.length(filter is_A list)
+let count_A lst =
+  List.length (List.filter (fun gakusei -> match gakusei with
+        {namae = n; tensuu = t; seiseki = s} -> s = "A")
+      lst)
 
 (* テスト *)
 let test1 = count_A lst1 = 0
